@@ -27,17 +27,18 @@ cd build
 <pre translate="no" dir="ltr" is-upgraded="">cmake ../src  
 </pre>
 
-- create bin directory:
-<pre translate="no" dir="ltr" is-upgraded="">mkdir ../bin
+- call the build system to build the project:
+<pre translate="no" dir="ltr" is-upgraded="">cmake --build . --config Release
 </pre>
 
-- call the build system to build the project:
-<pre translate="no" dir="ltr" is-upgraded="">cmake --build ../bin
-</pre>
- 
+If everything is done correctly, you will find ./bin subdirectory in your local directory.
+
 ## Run the project
 
-To run the project, you need to:
+To run the project, navigate to ./bin directory:
+<pre translate="no" dir="ltr" is-upgraded="">cd PATH_TO_EXTRACTED_DIR/bin
+</pre>
 
-1. position to 
-2. run .exe
+And run the InformationSetDecodingAnalysis.exe:
+<pre translate="no" dir="ltr" is-upgraded="">InformationSetDecodingAnalysis
+</pre>
