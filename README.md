@@ -10,14 +10,31 @@ Before building the project, one needs to have installed the following:
 
 ## Build the project
 
-You can find a pre-built code of a project in the .\bin subdirectory of this project. However, it is built for Win64 in Release mode. For all other platforms, it is necessary to build the project by performing the next steps:
+You can find a pre-built code of a project in the .\bin subdirectory of this project. However, it is built for Win64 in Release mode. For other platforms, it is necessary to build the project, and it can be done by performing the following steps:
 
-1. download \src subfolder of this project;
-2. extract the folder from the downloaded archive;
-3. run the terminal (Linux)/command line(Windows)/(Mac) and position yourself to the extracted folder  
-   example: cd ...
-4. run cmake
+1. download the project (if downloaded as .zip archive, extract the folder from the downloaded archive)
+2. open the terminal (Linux)/command line(Windows)/(Mac) and navigate to the downloaded (extracted) folder
+<pre translate="no" dir="ltr" is-upgraded="">cd PATH_TO_EXTRACTED_DIR
+</pre>
+3. build the project using CMake
 
+ - create **build** directory and navigate to it:
+<pre translate="no" dir="ltr" is-upgraded="">mkdir build
+cd build
+</pre>
+
+- run CMake to configure the project and generate a native build system:
+<pre translate="no" dir="ltr" is-upgraded="">cmake ../src  
+</pre>
+
+- create bin directory:
+<pre translate="no" dir="ltr" is-upgraded="">mkdir ../bin
+</pre>
+
+- call the build system to build the project:
+<pre translate="no" dir="ltr" is-upgraded="">cmake --build ../bin
+</pre>
+ 
 ## Run the project
 
 To run the project, you need to:
