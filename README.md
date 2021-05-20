@@ -40,5 +40,5 @@ To run the project, navigate to ./bin directory:
 </pre>
 
 And run the InformationSetDecodingAnalysis.exe:
-<pre translate="no" dir="ltr" is-upgraded="">InformationSetDecodingAnalysis
+<pre translate="no" dir="ltr" is-upgraded="">InformationSetDecodingAnalysis.exe
 </pre>
