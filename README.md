@@ -13,7 +13,7 @@ During installation, you will be only concerned with the section entitled "Manua
 
 ## Build the project
 
-You can find a pre-built code of a project in the .\bin\Release subdirectory of this project. However, it is built for Win64 in Release mode. For other platforms, it is necessary to build the project, and it can be done by performing the following steps:
+You can find a pre-built code of a project in the ./bin/Windows/Release subdirectory of this project. However, it is built for Win64 in Release mode. For other platforms, it is necessary to build the project, and it can be done by performing the following steps:
 
 1. download the project (if downloaded as .zip archive, extract the folder from the downloaded archive),
 2. edit the paths in CMake.txt so that they match the MOSEK and Boost paths in your system,
@@ -40,7 +40,7 @@ If everything is done correctly, you will find the InformationSetDecodingAnalays
 ## Run the project
 
 To run the project:  
-1. open the consol application and navigate to the directory containing executable (the executable is normally stored in PATH_TO_EXTRACTED_DIR/bin or in PATH_TO_EXTRACTED_DIR/bin/Release):
+1. open the consol application and navigate to the directory containing executable (the executable should be stored in PATH_TO_EXTRACTED_DIR/bin/Release):
 <pre translate="no" dir="ltr" is-upgraded="">cd PATH_TO_EXE_DIR
 </pre>
 
