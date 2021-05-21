@@ -16,7 +16,7 @@ During installation, you will be only concerned with the section entitled "Manua
 You can find a pre-built code of a project in the .\bin\Release subdirectory of this project. However, it is built for Win64 in Release mode. For other platforms, it is necessary to build the project, and it can be done by performing the following steps:
 
 1. download the project (if downloaded as .zip archive, extract the folder from the downloaded archive),
-2. edit the paths in CMake.txt so that they match the MOSEK and Boots paths in your system
+2. edit the paths in CMake.txt so that they match the MOSEK and Boost paths in your system,
 3. open the consol application and navigate to the downloaded (extracted) folder:
 <pre translate="no" dir="ltr" is-upgraded="">cd PATH_TO_EXTRACTED_DIR
 </pre>
@@ -48,7 +48,7 @@ To run the project:
 <pre translate="no" dir="ltr" is-upgraded="">InformationSetDecodingAnalysis.exe
 </pre>
 
-If everything works correctly, through the console, you will be asked to choose the arguments of the syndrome decoding problem and the algorithm that solves it. In particular, you will choose between the Hamming and Lee weight and between Prange's, Dumer'sm and Wagner's algorithm, as well as if the selected algorithm runs in the classical or quantum regime. You will also choose the alphabet size of the observed problem. In the resulting file (result.txt or result_quantum.txt), you will obtain the optimal values of the parameters of the selected algorithm when solving the hardest instance of the selected syndrome decoding problem. 
+If everything works correctly, through the console, you will be asked to choose the arguments of the syndrome decoding problem and the algorithm that solves it. In particular, you will choose between the Hamming and Lee weight and between Prange's, Dumer's and Wagner's algorithm, as well as if the selected algorithm runs in the classical or quantum regime. You will also choose the alphabet size of the observed problem. In the resulting file (result.txt or result_quantum.txt), you will obtain the optimal values of the parameters of the selected algorithm when solving the hardest instance of the selected syndrome decoding problem. 
 
 ### Authors
 André Chailloux, INRIA Paris, COSMIQ project-team  
