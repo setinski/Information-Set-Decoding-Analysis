@@ -44,6 +44,6 @@ And run the InformationSetDecodingAnalysis.exe:
 </pre>
 
 ### Authors
-André Chailloux, INRIA Paris, COSMIQ project-team
-Thomas Debris-Alazard, INRRIA Saclay, Grace project-team
-Simona Etinski, University of Paris, INRIA Paris, COSMIQ project-team
+André Chailloux, INRIA Paris, COSMIQ project-team  
+Thomas Debris-Alazard, INRRIA Saclay, Grace project-team  
+Simona Etinski, University of Paris, INRIA Paris, COSMIQ project-team  
