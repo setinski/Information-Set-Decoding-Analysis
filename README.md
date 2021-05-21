@@ -17,7 +17,7 @@ You can find a pre-built code of a project in the .\bin\Release subdirectory of 
 3. open the consol application and navigate to the downloaded (extracted) folder:
 <pre translate="no" dir="ltr" is-upgraded="">cd PATH_TO_EXTRACTED_DIR
 </pre>
-3. build the project using CMake:
+4. build the project using CMake:
 
  - create **build** directory and navigate to it:
 <pre translate="no" dir="ltr" is-upgraded="">mkdir build
