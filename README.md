@@ -13,7 +13,8 @@ Before building the project, one needs to have installed the following:
 You can find a pre-built code of a project in the .\bin\Release subdirectory of this project. However, it is built for Win64 in Release mode. For other platforms, it is necessary to build the project, and it can be done by performing the following steps:
 
 1. download the project (if downloaded as .zip archive, extract the folder from the downloaded archive),
-2. open the consol application and navigate to the downloaded (extracted) folder:
+2. edit the paths in CMake.txt so that they match the MOSEK and Boots paths in your system
+3. open the consol application and navigate to the downloaded (extracted) folder:
 <pre translate="no" dir="ltr" is-upgraded="">cd PATH_TO_EXTRACTED_DIR
 </pre>
 3. build the project using CMake:
