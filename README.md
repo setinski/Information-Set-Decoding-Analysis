@@ -16,7 +16,7 @@ During installation, you will be only concerned with the section entitled "Manua
 You can find a pre-built code of a project in the ./bin/Windows/Release subdirectory of this project. However, it is built for Win64 in Release mode. For other platforms, it is necessary to build the project, and it can be done by performing the following steps:
 
 1. download the project (if downloaded as .zip archive, extract the folder from the downloaded archive),
-2. navigate to the downloaded (extracted folder), open CMake.txt in a text editor and edit the paths in CMake.txt so that they match the MOSEK and Boost paths in your system (namely, BOOST_DIR, MOSEK_HEADER_DIR, MOSEK_LIB, and FUSION_LIB),
+2. navigate to the downloaded (extracted folder), open CMake.txt in a text editor and edit the paths in CMake.txt so that they match the MOSEK and Boost paths in your system (namely, BOOST_DIR, MOSEK_HEADER_DIR, MOSEK_LIB, and FUSION_LIB from CMake.txt should be set to match their real paths),
 3. open Command Promt (Windows)/Terminal (Linux and Mac) and navigate to the downloaded (extracted) folder through the console:
 <pre translate="no" dir="ltr" is-upgraded="">cd PATH_TO_EXTRACTED_DIR
 </pre>
