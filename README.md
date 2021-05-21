@@ -1,12 +1,14 @@
 # Information Set Decoding Analysis
 In this project, we analyze the complexity of the classical and quantum information set decoding algorithms used to solve the generalized version of the syndrome decoding problem. For more details, refer to https://arxiv.org/abs/2104.12810.
 
-## Requirements
+## Project's dependencies
 
-Before building the project, one needs to have installed the following:  
-1. [**Boost**](https://www.boost.org/users/download/) set of libraries;
-2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package;
-3. [**CMake**](https://cmake.org/download/) software.
+Before building the project, one needs to:  
+1. [Download](https://www.boost.org/users/download/) **Boost** set of libraries and extract the archive:  
+- The path to your extracted folder will be your BOOST_DIR path.
+2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package:  
+During installation, you will be only concerned with the section entitled "Manual compilation (all platforms)". Other sections are covered by the CMake.txt available in ./src directory of this repository.    
+4. [**CMake**](https://cmake.org/download/) software.
 
 ## Build the project
 
