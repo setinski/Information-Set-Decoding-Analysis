@@ -8,7 +8,7 @@ Before building and/or running the project, one needs to:
 The path to your extracted folder will be your BOOST_DIR path.
 2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package:  
 During installation, you will be only concerned with the section entitled "Manual compilation (all platforms)". Other sections are covered by the CMake.txt available in ./src directory of this repository.    
-3. [Download](https://cmake.org/download/) and install **CMake** software:  
+3. [Download](https://cmake.org/download/) and install **CMake** software.
 
 
 ## Build the project
