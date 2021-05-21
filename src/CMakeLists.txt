@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20.2)
+cmake_minimum_required(VERSION 3.15.0)
 enable_language(CXX)
 project(InformationSetDecodingAnalysis)
 
