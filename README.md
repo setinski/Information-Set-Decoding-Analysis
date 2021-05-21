@@ -1,4 +1,4 @@
-# Computational Complexity of Generalized Syndrome Decoding Problem
+# Information Set Decoding Analysis
 In this project, we analyze the complexity of the classical and quantum information set decoding algorithms used to solve the generalized version of the syndrome decoding problem. For more details, refer to https://arxiv.org/abs/2104.12810.
 
 ## Requirements
@@ -42,3 +42,8 @@ To run the project, navigate to ./bin directory:
 And run the InformationSetDecodingAnalysis.exe:
 <pre translate="no" dir="ltr" is-upgraded="">InformationSetDecodingAnalysis.exe
 </pre>
+
+### Authors
+André Chailloux, INRIA Paris, COSMIQ project-team
+Thomas Debris-Alazard, INRRIA Saclay, Grace project-team
+Simona Etinski, University of Paris, INRIA Paris, COSMIQ project-team
