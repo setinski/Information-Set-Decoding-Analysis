@@ -48,7 +48,7 @@ To run the project:
 <pre translate="no" dir="ltr" is-upgraded="">InformationSetDecodingAnalysis.exe
 </pre>
 
-If everything works correctly, through the console, you will be asked to choose the arguments of the syndrome decoding problem and the algorithm that solves it. In particular, you will choose between the Hamming and Lee weight and between Prange's, Dumer'sm and Wagner's algorithm, as well as if the selected algorithm runs in the classical or quantum regime. You will also choose the alphabet size of the observed problem. In the resulting file (result.txt or result_quantum.txt), you will obtain the optimal values of the parameters of the selected algorithm when solving the hardest instance of the selected syndrome decoding problem. 
+If everything works correctly, through the console, you will be asked to choose the arguments of the syndrome decoding problem and the algorithm that solves it. In particular, you will choose between the Hamming and Lee weight and between Prange's, Dumer's and Wagner's algorithm, as well as if the selected algorithm runs in the classical or quantum regime. You will also choose the alphabet size of the observed problem. In the resulting file (result.txt or result_quantum.txt), you will obtain the optimal values of the parameters of the selected algorithm when solving the hardest instance of the selected syndrome decoding problem. 
 
 ### Authors
 André Chailloux, INRIA Paris, COSMIQ project-team  
