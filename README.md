@@ -5,7 +5,7 @@ In this project, we analyze the complexity of the classical and quantum informat
 
 Before building the project, one needs to have installed the following:  
 1. [**Boost**](https://www.boost.org/users/download/) set of libraries;
-2. [**MOSEK**](https://www.mosek.com/downloads/) software package;
+2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package;
 3. [**CMake**](https://cmake.org/download/) software.
 
 ## Build the project
