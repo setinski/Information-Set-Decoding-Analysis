@@ -8,9 +8,9 @@ set(FUSION_LIB "C:/Program Files/Mosek/9.2/tools/platform/win64x86/bin/fusion64_
 set(BOOST_DIR "C:/Program Files (x86)/boost_1_75_0")           				 				 # set the path to the boost directory
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHc /std:c++latest")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin/Windows")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin/Windows")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin/Windows")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin")
 
 include_directories("${MOSEK_HEADER_DIR}")
 include_directories("${BOOST_DIR}")
