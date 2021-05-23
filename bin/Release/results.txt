@@ -1,0 +1,2 @@
+alphabetSize codeRate weight optLevelNum paramL paramPruntime(log 2) runtime(log alphabetSize)
+003          0.382    1.000  001         0.000  0.382  0.361                     0.228
