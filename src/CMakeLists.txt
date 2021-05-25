@@ -23,7 +23,6 @@ set(MOSEK_LIB "C:/Program Files/Mosek/9.2/tools/platform/win64x86/bin/mosek64_9_
 set(FUSION_LIB "C:/Program Files/Mosek/9.2/tools/platform/win64x86/bin/fusion64_9_2.lib") 	 # set the path to fusion library
 set(BOOST_DIR "C:/Program Files (x86)/boost_1_75_0")           				 				 # set the path to the boost directory
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHc /std:c++latest")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/../bin")
@@ -53,11 +52,6 @@ if(MSVC OR MSYS OR MINGW)
     set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY 
 				VS_STARTUP_PROJECT "${PROJECT_NAME}")
 endif()
-  
-#target_link_libraries("${PROJECT_NAME}" debug "${MOSEK_LIB}")
-#target_link_libraries("${PROJECT_NAME}" optimized "${MOSEK_LIB}")
-#target_link_libraries("${PROJECT_NAME}" debug "${FUSION_LIB}")
-#target_link_libraries("${PROJECT_NAME}" optimized "${FUSION_LIB}")
 
 target_link_libraries("${PROJECT_NAME}" "${MOSEK_LIB}")
 target_link_libraries("${PROJECT_NAME}" "${FUSION_LIB}")
