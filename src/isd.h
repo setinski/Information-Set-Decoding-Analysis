@@ -2,13 +2,25 @@
 #define ISD_H
 
 #include "space.h"
-#include "misc.h"
+#include <string>
+#include <functional>
+
+extern const double tol;
+extern const double epsilon;
+extern bool quantum;
+
+void ParamCheck(double);
+void AlgCheck(std::string);
+void AlphabetSizeCheck(int);
 
 double AvgSolsNum(const VectorSpace&, double, double);
 double UpperRoot(std::string, unsigned int, double);
 double LowerRoot(std::string, unsigned int, double);
 double RunTime(std::string, std::string, unsigned int, double,
 				double&, double&, double&, unsigned int&);
+
+double GoldenSectionSearch(double, double, double,
+						const std::function<double(double)>&);
 
 class InformationSetDecoding
 {
@@ -30,33 +42,25 @@ public:
 	double GetCodeRate() const { return codeRate; }
 	void SetCodeRate(double cr)
 	{
-		if(!ParamCheck(cr))
-			throw std::invalid_argument(
-				"Normalized value needs to be in the interval [0,1].");
+		ParamCheck(cr);
 		codeRate = cr;
 	}
 	double GetWeight() const { return weight; }
 	void SetWeight(double w)
 	{
-		if(!ParamCheck(w))
-			throw std::invalid_argument(
-				"Normalized value needs to be in the interval [0,1].");
+		ParamCheck(w);
 		weight = w;
 	}
 	std::string GetMetric() const { return metric; }
 	void SetMetric(const std::string& m)
 	{
-		if(!MetricCheck(m))
-			throw std::invalid_argument(
-				"Invalid metric (needs to be either Hamming or Lee).");
+		MetricCheck(m);
 		metric = m;
 	}
 	std::string GetAlg() const { return algorithm; }
 	void SetAlg(const std::string& a)
 	{
-		if(!AlgCheck(a))
-			throw std::invalid_argument(
-				"This algorithm is not offered. Allowed algorithms are prange, dumer and wagner.");
+		AlgCheck(a);
 		algorithm = a;
 	}
 	double GetSurfaceW() const { return surfaceW; }

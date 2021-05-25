@@ -4,52 +4,71 @@
 
 using boost::math::tools::bisect;
 
-/*---------------------------------ISD functions------------------------------------*/
+/* Constants: */
 
-InformationSetDecoding::InformationSetDecoding(unsigned int as, double cr, double w,
-                                         const std::string& m, const std::string& a)
+    /* Terminating tolerance. */
+    const double tol = 1e-5;
+
+    /* Tolerated computational error. */
+    const double epsilon = 1e-5;
+
+    /* Classical algorithm: quantum = false;
+    Quantum algorithm: quantum = true. */
+    bool quantum = false;
+    //int bits = std::numeric_limits<double>::digits;
+
+/* Parameters: in range [0,1]. */
+void ParamCheck(double p)
 {
-    if(AlphabetSizeCheck(as))
-        alphabetSize = as;
-    else
-        throw std::invalid_argument(
-            "Invalid aphabet size (needs to be an integer value greater than 2).");
+    if (p >= 0 && p <= 1.0) return;
 
-    if(MetricCheck(m))
-        metric = m;
-    else
-        throw std::invalid_argument(
-            "Invalid metric (needs to be either Hamming or Lee).");
+    throw std::invalid_argument("Normalized value needs to be in the interval [0,1].");
 
-    if(ParamCheck(cr))
-        codeRate = cr;
-    else
-        throw std::invalid_argument(
-            "Normalized value needs to be in the interval [0,1].");
+}
+
+/* Algorithms compared: Prange's, Dumer/Stern's, Wagner's based. */
+void AlgCheck(std::string a)
+{
+    if (!a.compare("prange") || !a.compare("dumer") || !a.compare("wagner")) return;
+
+    throw std::invalid_argument("This algorithm is not offered. Allowed algorithms are prange, dumer and wagner.");
+
+}
+
+/* Alphabet size: greater or equal to 2. */
+void AlphabetSizeCheck(int alphabetSize)
+{
+    if (alphabetSize >= 2) return;
+
+    throw std::invalid_argument("Alphabet size needs to be greater or equal to 2.");
+}
+
+/* Instance of Information Set Decoding problem. */
+InformationSetDecoding::InformationSetDecoding(unsigned int as, double cr, double w, const std::string& m, const std::string& a)
+{
+    alphabetSize = as;
+
+    MetricCheck(m);
+    metric = m;
+
+    ParamCheck(cr);
+    codeRate = cr;
+
+    ParamCheck(w);
+    weight = w;
     
-    if(ParamCheck(w))
-        weight = w;
-    else
-        throw std::invalid_argument(
-            "Normalized value needs to be in the interval [0,1].");
-    
-    if(AlgCheck(a))
-        algorithm = a;
-    else
-        throw std::invalid_argument(
-            "This algorithm is not offered. Allowed algorithms are prange, dumer and wagner.");
+    AlgCheck(a);
+    algorithm = a;
 
     space = VectorSpace(metric, alphabetSize);
     surfaceW = space.SphereSurfArea(weight);
     if (surfaceW == -1)
     {
-        throw std::invalid_argument(
-            "Surface area surfaceW is not found.");
+        throw std::invalid_argument("Surface area surfaceW is not found.");
     }
 }
 
-InformationSetDecoding& InformationSetDecoding::operator=
-                        (const InformationSetDecoding& isd)
+InformationSetDecoding& InformationSetDecoding::operator=(const InformationSetDecoding& isd)
 {
     if (this == &isd)
         return *this;
@@ -65,11 +84,15 @@ InformationSetDecoding& InformationSetDecoding::operator=
     return *this;
 }
 
-double InformationSetDecoding::BDayDecCost(double paramL, double paramP,
-                                            double optLevelNum) const
+/* Cost of birthday decoding. */
+double InformationSetDecoding::BDayDecCost(double paramL, double paramP, double optLevelNum) const
 {
     double distance1 = paramP / (codeRate + paramL);
-    if(!ParamCheck(distance1))
+    try
+    {
+        ParamCheck(distance1);
+    }
+    catch (std::invalid_argument e)
     {
         if (distance1 >= 1.0 && distance1 <= 1.0 + epsilon)
         {
@@ -78,36 +101,35 @@ double InformationSetDecoding::BDayDecCost(double paramL, double paramP,
         else
         {
             std::cout << distance1 << std::endl;
-            throw std::runtime_error(
-                "Numerical issue on parameter paramP / (codeRate + paramL).");
+            throw std::runtime_error("Numerical issue on parameter paramP / (codeRate + paramL).");
         }
     }
 
     double surface1 = (codeRate + paramL) * space.SphereSurfArea(distance1);
     if (surface1 == -1)
     {
-        throw std::invalid_argument(
-            "Surface area surface1 is not found.");
+        throw std::invalid_argument("Surface area surface1 is not found.");
     }
 
     if (quantum)
     {
-        return std::min(surface1 / (pow(2, optLevelNum) + 1),
-                        paramL / optLevelNum);
+        return std::min(surface1 / (pow(2, optLevelNum) + 1), paramL / optLevelNum);
     }
     else
     {
-        return std::min(surface1 / pow(2, optLevelNum),
-                        paramL / optLevelNum);
+        return std::min(surface1 / pow(2, optLevelNum), paramL / optLevelNum);
     }
 }
 
-double InformationSetDecoding::SolsPerIter(double paramL, double paramP,
-                                            double optLevelNum) const
+/* Number of solutions per iteration. */
+double InformationSetDecoding::SolsPerIter(double paramL, double paramP, double optLevelNum) const
 {
     double distance1 = paramP / (codeRate + paramL);
-    
-    if(!ParamCheck(distance1))
+    try
+    {
+        ParamCheck(distance1);
+    }
+    catch (std::invalid_argument e)
     {
         if (distance1 >= 1.0 && distance1 <= 1.0 + epsilon)
         {
@@ -116,28 +138,24 @@ double InformationSetDecoding::SolsPerIter(double paramL, double paramP,
         else
         {
             std::cout << distance1 << std::endl;
-            throw std::runtime_error(
-                "Numerical issue on parameter paramP / (codeRate + paramL).");
+            throw std::runtime_error("Numerical issue on parameter paramP / (codeRate + paramL).");
         }
     }
 
     double surface1 = (codeRate + paramL) * space.SphereSurfArea(distance1);
     if (surface1 == -1)
     {
-        throw std::invalid_argument(
-            "Surface area surface1 is not found.");
+        throw std::invalid_argument("Surface area surface1 is not found.");
     }
 
     double bottomListSize;
     if (quantum)
     {
-        bottomListSize = std::min(surface1 / (pow(2, optLevelNum) + 1),
-                                    paramL / optLevelNum);
+        bottomListSize = std::min(surface1 / (pow(2, optLevelNum) + 1), paramL / optLevelNum);
     }
     else
     {
-        bottomListSize = std::min(surface1 / pow(2, optLevelNum),
-                                    paramL / optLevelNum);
+        bottomListSize = std::min(surface1 / pow(2, optLevelNum), paramL / optLevelNum);
     }
 
     double paramM = paramL - (optLevelNum - 1) * bottomListSize;
@@ -151,11 +169,15 @@ double InformationSetDecoding::SolsPerIter(double paramL, double paramP,
     }   
 }
 
-double InformationSetDecoding::IterCost(double paramL, double paramP,
-                                        double optLevelNum) const
+/* Iteration cost. */
+double InformationSetDecoding::IterCost(double paramL, double paramP, double optLevelNum) const
 {   
     double distance1 = paramP / (codeRate + paramL);
-    if(!ParamCheck(distance1))
+    try
+    {
+        ParamCheck(distance1);
+    }
+    catch (std::invalid_argument e)
     {
         if (distance1 >= 1.0 && distance1 <= 1.0 + epsilon)
         {
@@ -164,39 +186,41 @@ double InformationSetDecoding::IterCost(double paramL, double paramP,
         else
         {
             std::cout << distance1 << std::endl;
-            throw std::runtime_error(
-                "Numerical issue on parameter paramP / (codeRate + paramL).");
+            throw std::runtime_error("Numerical issue on parameter paramP / (codeRate + paramL).");
         }
     }
 
     double surface1 = (codeRate + paramL) * space.SphereSurfArea(distance1);
     if (surface1 == -1)
     {
-        throw std::invalid_argument(
-            "Surface area surface1 is not found.");
+        throw std::invalid_argument("Surface area surface1 is not found.");
     } 
 
     if (quantum)
     {
-        return std::min(surface1 / (pow(2, optLevelNum) + 1),
-                        paramL / optLevelNum);
+        return std::min(surface1 / (pow(2, optLevelNum) + 1), paramL / optLevelNum);
     }
     else
     {
-        return std::min(surface1 / pow(2, optLevelNum),
-                        paramL / optLevelNum);
+        return std::min(surface1 / pow(2, optLevelNum), paramL / optLevelNum);
     }
 }
 
+/* Expected number of solutions. */
 double InformationSetDecoding::SolsNum() const
 {
     return std::max(surfaceW - (1 - codeRate), 0.0);
 }
 
+/* Probability of finding a particular solution. */
 double InformationSetDecoding::PartSolProb(double paramL, double paramP) const
 {
     double distance2 = (weight - paramP) / (1 - codeRate - paramL);
-    if(!ParamCheck(distance2))
+    try
+    {
+        ParamCheck(distance2);
+    }
+    catch (std::invalid_argument e)
     {
         if (distance2 >= 1.0 && distance2 <= 1.0 + epsilon)
         {
@@ -205,8 +229,7 @@ double InformationSetDecoding::PartSolProb(double paramL, double paramP) const
         else
         {
             std::cout << distance2 << std::endl;
-            throw std::runtime_error(
-                "Numerical issue on parameter (weight - paramP) / (1 - codeRate - paramL).");
+            throw std::runtime_error("Numerical issue on parameter (weight - paramP) / (1 - codeRate - paramL).");
         }
     }
 
@@ -219,10 +242,15 @@ double InformationSetDecoding::PartSolProb(double paramL, double paramP) const
     return surface2 - surfaceW + paramL;
 }
 
+/* Probablility of findiing any solution. */
 double InformationSetDecoding::AnySolProb(double paramL, double paramP) const
 {
     double distance2 = (weight - paramP) / (1 - codeRate - paramL);
-    if(!ParamCheck(distance2))
+    try
+    {
+        ParamCheck(distance2);
+    }
+    catch (std::invalid_argument e)
     {
         if (distance2 >= 1.0 && distance2 <= 1.0 + epsilon)
         {
@@ -231,26 +259,28 @@ double InformationSetDecoding::AnySolProb(double paramL, double paramP) const
         else
         {
             std::cout << distance2 << std::endl;
-            throw std::runtime_error(
-                "Numerical issue on parameter (weight - paramP) / (1 - codeRate - paramL).");
+            throw std::runtime_error("Numerical issue on parameter (weight - paramP) / (1 - codeRate - paramL).");
         }
     }
 
     double surface2 = (1 - codeRate - paramL) * space.SphereSurfArea(distance2);
     if (surface2 == -1)
     {
-        throw std::invalid_argument(
-            "Surface area surface2 is not found.");
+        throw std::invalid_argument("Surface area surface2 is not found.");
     }
 
     return std::min(0.0, surface2 + paramL - std::min(1 - codeRate, surfaceW));
 }
 
-double InformationSetDecoding::RunTime(double paramL, double paramP,
-                                       unsigned int& optLevelNum) const
+/* Running time of the algorithm. */
+double InformationSetDecoding::RunTime(double paramL, double paramP, unsigned int& optLevelNum) const
 {
     double distance1 = paramP / (codeRate + paramL);
-    if(!ParamCheck(distance1))
+    try
+    {
+        ParamCheck(distance1);
+    }
+    catch (std::invalid_argument e)
     {
         if (distance1 >= 1.0 && distance1 <= 1.0 + epsilon)
         {
@@ -259,20 +289,22 @@ double InformationSetDecoding::RunTime(double paramL, double paramP,
         else
         {
             std::cout << distance1 << std::endl;
-            throw std::runtime_error(
-                "Numerical issue on parameter paramP / (codeRate + paramL).");
+            throw std::runtime_error("Numerical issue on parameter paramP / (codeRate + paramL).");
         }
     }
 
     double surface1 = (codeRate + paramL) * space.SphereSurfArea(distance1);
     if (surface1 == -1)
     {
-        throw std::invalid_argument(
-            "Surface area surface1 is not found.");
+        throw std::invalid_argument("Surface area surface1 is not found.");
     }
 
     double distance2 = (weight - paramP) / (1 - codeRate - paramL);
-    if(!ParamCheck(distance2))
+    try
+    {
+        ParamCheck(distance2);
+    }
+    catch (std::invalid_argument e)
     {
         if (distance2 >= 1.0 && distance2 <= 1.0 + epsilon)
         {
@@ -281,16 +313,14 @@ double InformationSetDecoding::RunTime(double paramL, double paramP,
         else
         {
             std::cout << distance2 << std::endl;
-            throw std::runtime_error(
-                "Numerical issue on parameter (weight - paramP) / (1 - codeRate - paramL).");
+            throw std::runtime_error("Numerical issue on parameter (weight - paramP) / (1 - codeRate - paramL).");
         }
     }
 
     double surface2 = (1 - codeRate - paramL) * space.SphereSurfArea(distance2);
     if (surface2 == -1)
     {
-        throw std::invalid_argument(
-            "Surface area surface2 is not found.");
+        throw std::invalid_argument("Surface area surface2 is not found.");
     }
 
     auto theorem = [=](unsigned int optLevelNum) -> bool
@@ -315,46 +345,68 @@ double InformationSetDecoding::RunTime(double paramL, double paramP,
     double bottomListSize;
     if (quantum)
     {
-        bottomListSize = std::min(surface1 / (pow(2, optLevelNum) + 1),
-                                  paramL / optLevelNum);
+        bottomListSize = std::min(surface1 / (pow(2, optLevelNum) + 1), paramL / optLevelNum);
     }
     else
     {
-        bottomListSize = std::min(surface1 / pow(2, optLevelNum),
-                                  paramL / optLevelNum);
+        bottomListSize = std::min(surface1 / pow(2, optLevelNum), paramL / optLevelNum);
     }
 
     double paramM = paramL - (optLevelNum - 1) * bottomListSize;
     if (quantum)
     {
-        return bottomListSize - 0.5 * std::min(0.0, std::min(0.0, surface2 + paramL
-            - std::min(1 - codeRate, surfaceW)) + 3 * bottomListSize - paramM);
+        return bottomListSize - 0.5 * std::min(0.0, std::min(0.0, surface2 + paramL - std::min(1 - codeRate, surfaceW)) + 3 * bottomListSize - paramM);
     }
     else
     {
-        return bottomListSize - std::min(0.0, std::min(0.0, surface2 + paramL
-            - std::min(1 - codeRate, surfaceW)) + 2 * bottomListSize - paramM);
+        return bottomListSize - std::min(0.0, std::min(0.0, surface2 + paramL - std::min(1 - codeRate, surfaceW)) + 2 * bottomListSize - paramM);
     }
 }
 
-double InformationSetDecoding::GoldenSectionSearch(double& paramP,
-                                         unsigned int& optLevelNum)
+/* Golden section search. */
+double GoldenSectionSearch(double a, double b, double tol, const std::function<double(double)>& f)
+{
+    const double gr = (sqrt(5) + 1) / 2;
+
+    double c = b - (b - a) / gr;
+    double d = a + (b - a) / gr;
+    while (abs(c - d) > tol)
+    {
+        if (f(c) < f(d))
+        {
+            b = d;
+        }
+        else
+        {
+            a = c;
+        }
+        c = b - (b - a) / gr;
+        d = a + (b - a) / gr;
+    }
+
+    return (b + a) / 2;
+}
+
+/* Golden section search on RunTime function with one parameter
+(used for Prange's algorithm parameter optimization). */
+double InformationSetDecoding::GoldenSectionSearch(double& paramP, unsigned int& optLevelNum)
 {
     double paramPLow = std::max(0.0, weight - (1 - codeRate));
     double paramPHigh = std::min(weight, codeRate);
-    std::function<double(double)> runTimeFun = [&](double p)
-                            {return RunTime(0.0, p, optLevelNum); };
+    std::function<double(double)> runTimeFun = [&](double p) {return RunTime(0.0, p, optLevelNum); };
     paramP = ::GoldenSectionSearch(paramPLow, paramPHigh, tol, runTimeFun);
     
     return log2(alphabetSize) * RunTime(0.0, paramP, optLevelNum);
 }
 
-double InformationSetDecoding::GoldenSectionSearch(double& paramL, double& paramP,
-                                                   unsigned int& optLevelNum)
+/* Golden section search on RunTime function with two parameters
+(used for Dumer/Stern's and Wagner's algorithm. )*/
+double InformationSetDecoding::GoldenSectionSearch(double& paramL, double& paramP, unsigned int& optLevelNum)
 {
-    const double gr = (sqrt(5) + 1) / 2;
+    //const double paramLLow = 0, paramLHigh = std::min(1 - codeRate - 0.1, 0.25);
     const double paramLLow = 0, paramLHigh = 1 - codeRate;
     double a = paramLLow, b = paramLHigh;
+    const double gr = (sqrt(5) + 1) / 2;
     double c = b - (b - a) / gr;
     double d = a + (b - a) / gr;
 
@@ -362,14 +414,12 @@ double InformationSetDecoding::GoldenSectionSearch(double& paramL, double& param
     {
         double paramPLowC = std::max(0.0, weight - (1 - codeRate - c));
         double paramPHighC = std::min(weight, codeRate + c);
-        std::function<double(double)> runTimeC = [&](double p)
-                                    {return RunTime(c, p, optLevelNum); };
+        std::function<double(double)> runTimeC = [&](double p) {return RunTime(c, p, optLevelNum); };
         double optC = ::GoldenSectionSearch(paramPLowC, paramPHighC, tol, runTimeC);
 
         double paramPLowD = std::max(0.0, weight - (1 - codeRate - d));
         double paramPHighD = std::min(weight, codeRate + d);
-        std::function<double(double)> runTimeD = [&](double p)
-                                    {return RunTime(d, p, optLevelNum); };
+        std::function<double(double)> runTimeD = [&](double p) {return RunTime(d, p, optLevelNum); };
         double optD = ::GoldenSectionSearch(paramPLowD, paramPHighD, tol, runTimeD);
 
         if (RunTime(c, optC, optLevelNum) < RunTime(d, optD, optLevelNum))
@@ -385,71 +435,58 @@ double InformationSetDecoding::GoldenSectionSearch(double& paramL, double& param
     }
 
     paramL = (b + a) / 2;
-    std::function<double(double)> runTime = [&](double p)
-                                    {return RunTime(paramL, p, optLevelNum); };
+    std::function<double(double)> runTime = [&](double p) {return RunTime(paramL, p, optLevelNum); };
     paramP = ::GoldenSectionSearch(std::max(0.0, weight - (1 - codeRate - paramL)),
         std::min(weight, codeRate + paramL), tol, runTime);
 
     return log2(alphabetSize) * RunTime(paramL, paramP, optLevelNum);
 }
 
-/*-----------------------Hardest instances functions--------------------------------*/
-
+/* Termination condition. */
 struct TerminationCondition {
     bool operator() (double min, double max) {
         return abs(min - max) <= tol;
     }
 };
 
-double AvgSolsNum(const VectorSpace& space, double distance, double codeRate)
+/* Average number of solutions per iteration of the algorithm. */
+double AvgSolsNum(const VectorSpace& space, double weight, double codeRate)
 {
-    double surface = space.SphereSurfArea(distance);
-    if (surface == -1)
-    {
-        throw std::invalid_argument(
-            "Surface area surface1 is not found.");
-    }
-    return space.SphereSurfArea(distance) - (1 - codeRate);
+    return space.SphereSurfArea(weight) - (1 - codeRate);
 }
 
+/* Calculating the upper root of the average number of solutions given as a function on weight. */
 double UpperRoot(std::string metric, unsigned int alphabetSize, double codeRate)
 {
     VectorSpace space(metric, alphabetSize);
-    std::function<double(double)> avgSolsNumCR = [&](double cr)
-                                    {return AvgSolsNum(space, 1 - epsilon, cr); };
-    std::pair<double, double> bracketsCR = bisect(avgSolsNumCR, 0.0, 1.0,
-                                    TerminationCondition());
+    std::function<double(double)> avgSolsNumCR = [&](double cr) {return AvgSolsNum(space, 1 - epsilon, cr); };
+    std::pair<double, double> bracketsCR = bisect(avgSolsNumCR, 0.0, 1.0, TerminationCondition());
     double highestCodeRate = (bracketsCR.first + bracketsCR.second) / 2;
 
     if (codeRate > highestCodeRate)
         return 1;
     else
     {
-        std::function<double(double)> avgSolsNumW = [&](double w)
-                                     {return AvgSolsNum(space, w, codeRate); };
-        std::pair<double, double> bracketsW = bisect(avgSolsNumW,
-            AvgVectorWeight(space, 1.0) / MaxWeight(space), 1.0, TerminationCondition());
+        std::function<double(double)> avgSolsNumW = [&](double w) {return AvgSolsNum(space, w, codeRate); };
+        std::pair<double, double> bracketsW = bisect(avgSolsNumW, AvgVectorWeight(space, 1.0) / MaxWeight(space), 1.0, TerminationCondition());
         return (bracketsW.first + bracketsW.second) / 2;
     }
 }
 
+/* Calculating the lower root of the average number of solutions given as a function on weight. */
 double LowerRoot(std::string metric, unsigned int alphabetSize, double codeRate)
 {
     VectorSpace space(metric, alphabetSize);
-    std::function<double(double)> avgSolsNumW = [&](double w)
-                                        {return AvgSolsNum(space, w, codeRate); };
-    std::pair<double, double> bracketsW = bisect(avgSolsNumW,
-            0.0, AvgVectorWeight(space, 1.0) / MaxWeight(space), TerminationCondition());
+    std::function<double(double)> avgSolsNumW = [&](double w) {return AvgSolsNum(space, w, codeRate); };
+    std::pair<double, double> bracketsW = bisect(avgSolsNumW, 0.0, AvgVectorWeight(space, 1.0) / MaxWeight(space), TerminationCondition());
     return (bracketsW.first + bracketsW.second) / 2;
 }
 
-double RunTime(std::string metric, std::string algorithm, unsigned int alphabetSize,
-               double codeRate, double& weight, double& paramL, double& paramP,
-               unsigned int& optLevelNum)
+/* Running time of the algorithm that also gives the associated weight and corresponding paramL, paramP and optLevelNum. */
+double RunTime(std::string metric, std::string algorithm, unsigned int alphabetSize, double codeRate,
+    double& weight, double& paramL, double& paramP, unsigned int& optLevelNum)
 {
     double runTime;
-    InformationSetDecoding isd(alphabetSize, codeRate, weight, metric, algorithm);
-    
     if (!metric.compare("hamming") && alphabetSize != 3)
     {
         weight = LowerRoot(metric, alphabetSize, codeRate) - epsilon;
@@ -459,6 +496,7 @@ double RunTime(std::string metric, std::string algorithm, unsigned int alphabetS
         weight = UpperRoot(metric, alphabetSize, codeRate) - epsilon;
     }
 
+    InformationSetDecoding isd(alphabetSize, codeRate, weight, metric, algorithm);
     if (!algorithm.compare("prange"))
     {
         try
@@ -486,12 +524,8 @@ double RunTime(std::string metric, std::string algorithm, unsigned int alphabetS
     }
     else
     {
-        std::cout << "This algorithm is not offered. ";
-        std::cout << "Allowed algorithms are prange, dumerand wagner.";
-        std::cout << std::endl;
+        std::cout << "This algorithm is not offered. Allowed algorithms are prange, dumer and wagner." << std::endl;
         return -1;
     }
     return -runTime;
 }
-
-/*--------------------------------------------------------------------------------*/

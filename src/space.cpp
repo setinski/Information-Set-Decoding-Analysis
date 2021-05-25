@@ -1,9 +1,17 @@
-#include "space.h"
 #include <vector>
 #include <algorithm>
+#include "space.h"
 
-void LinConstrs(double distance, const VectorSpace& space,
-				const Model::t& M, const Variable::t& x)
+/* Compared metrics: Hamming and Lee metric. */
+void MetricCheck(std::string m)
+{
+	if (!m.compare("hamming") || !m.compare("lee")) return;
+
+	throw std::invalid_argument("This metric is not offered. Allowed metrics are hamming and lee.");
+}
+
+/* Linear constraints. */
+void LinConstrs(double distance, const VectorSpace& space, const Model::t& M, const Variable::t& x)
 {
 	M->constraint("lc1", Expr::sum(x), Domain::equalsTo(1.0));
 
@@ -14,34 +22,31 @@ void LinConstrs(double distance, const VectorSpace& space,
 	}
 
 	auto coeffs_ptr = new_array_ptr<double>(coeffs);
-	M->constraint("lc2", Expr::dot(coeffs_ptr, x),
-			Domain::equalsTo(distance * MaxWeight(space)));
+	M->constraint("lc2", Expr::dot(coeffs_ptr, x), Domain::equalsTo(distance * MaxWeight(space)));
 }
 
-void ExpConicConstrs(const VectorSpace& space, const Model::t& M,
-					 const Variable::t& t, const Variable::t& x)
+/* Exponential constraints. */
+void ExpConicConstrs(const VectorSpace& space, const Model::t& M, const Variable::t& t, const Variable::t& x)
 {
 	for (auto i = 0; i < space.alphabetSize; i++)
 	{
-		M->constraint(Expr::hstack(1, x->index(i), t->index(i)),
-					  Domain::inPExpCone());
+		M->constraint(Expr::hstack(1, x->index(i), t->index(i)), Domain::inPExpCone());
 	}
 }
 
+/* Surface area of a sphere. */
 double VectorSpace::SphereSurfArea(double distance) const
 {
 	Model::t M = new Model("space");
 	auto _M = finally([&]() {M->dispose(); });
 
-	Variable::t x = M->variable("x", alphabetSize,
-								Domain::greaterThan(0.0));
+	Variable::t x = M->variable("x", alphabetSize, Domain::greaterThan(0.0));
 	Variable::t t = M->variable("t", alphabetSize);
 
 	LinConstrs(distance, *this, M, x);	
 	ExpConicConstrs(*this, M, t, x);
 
-	M->objective("obj", ObjectiveSense::Maximize,
-				 Expr::sum(t));
+	M->objective("obj", ObjectiveSense::Maximize, Expr::sum(t));
 	M->solve();
 
 	if (M->getProblemStatus() == ProblemStatus::PrimalAndDualFeasible)
@@ -54,6 +59,7 @@ double VectorSpace::SphereSurfArea(double distance) const
 	return -1;
 }
 
+/* Weight function. */
 unsigned int Weight(const VectorSpace& space, unsigned int element)
 {
 	element %= space.alphabetSize;
@@ -65,22 +71,19 @@ unsigned int Weight(const VectorSpace& space, unsigned int element)
 	}
 	else if (!space.metric.compare("lee"))
 	{
-		weight = std::min(element % space.alphabetSize,
-				space.alphabetSize - element % space.alphabetSize);
+		weight = std::min(element % space.alphabetSize, space.alphabetSize - element % space.alphabetSize);
 	}
 	else
 	{
-		throw std::invalid_argument(
-			"Invalid metric (needs to be either Hamming or Lee).");
+		throw std::invalid_argument("Invalid metric (needs to be either Hamming or Lee).");
 	}
 	return weight;
 }
 
+/* Maximal weight in the vector space. */
 unsigned int MaxWeight(const VectorSpace& space)
 {
-	if (!MetricCheck(space.metric))
-		throw std::invalid_argument(
-			"Invalid metric (needs to be either Hamming or Lee).");
+	MetricCheck(space.metric);
 
 	std::vector<unsigned int> weights(space.alphabetSize);
 	for (auto i = 0; i < space.alphabetSize; ++i)
@@ -91,11 +94,10 @@ unsigned int MaxWeight(const VectorSpace& space)
 	return *std::max_element(weights.begin(), weights.end());
 }
 
+/* Average weight of a vector. */
 double AvgVectorWeight(const VectorSpace& space, double length)
 {
-	if (!MetricCheck(space.metric))
-		throw std::invalid_argument(
-			"Invalid metric (needs to be either Hamming or Lee).");
+	MetricCheck(space.metric);
 
 	double avgWeight = 0;
 	for (auto i = 0; i < space.alphabetSize; ++i)
