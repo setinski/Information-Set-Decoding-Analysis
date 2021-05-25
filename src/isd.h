@@ -2,25 +2,16 @@
 #define ISD_H
 
 #include "space.h"
-#include <string>
-#include <functional>
+#include "misc.h"
 
 extern const double tol;
 extern const double epsilon;
 extern bool quantum;
 
-void ParamCheck(double);
-void AlgCheck(std::string);
-void AlphabetSizeCheck(int);
-
 double AvgSolsNum(const VectorSpace&, double, double);
 double UpperRoot(std::string, unsigned int, double);
 double LowerRoot(std::string, unsigned int, double);
-double RunTime(std::string, std::string, unsigned int, double,
-				double&, double&, double&, unsigned int&);
-
-double GoldenSectionSearch(double, double, double,
-						const std::function<double(double)>&);
+double RunTime(std::string, std::string, unsigned int, double, double&, double&, double&, unsigned int&);
 
 class InformationSetDecoding
 {

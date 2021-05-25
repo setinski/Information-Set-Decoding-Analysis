@@ -2,15 +2,6 @@
 #include <algorithm>
 #include "space.h"
 
-/* Compared metrics: Hamming and Lee metric. */
-void MetricCheck(std::string m)
-{
-	if (!m.compare("hamming") || !m.compare("lee")) return;
-
-	throw std::invalid_argument("This metric is not offered. Allowed metrics are hamming and lee.");
-}
-
-/* Linear constraints. */
 void LinConstrs(double distance, const VectorSpace& space, const Model::t& M, const Variable::t& x)
 {
 	M->constraint("lc1", Expr::sum(x), Domain::equalsTo(1.0));
@@ -25,7 +16,6 @@ void LinConstrs(double distance, const VectorSpace& space, const Model::t& M, co
 	M->constraint("lc2", Expr::dot(coeffs_ptr, x), Domain::equalsTo(distance * MaxWeight(space)));
 }
 
-/* Exponential constraints. */
 void ExpConicConstrs(const VectorSpace& space, const Model::t& M, const Variable::t& t, const Variable::t& x)
 {
 	for (auto i = 0; i < space.alphabetSize; i++)
@@ -34,7 +24,6 @@ void ExpConicConstrs(const VectorSpace& space, const Model::t& M, const Variable
 	}
 }
 
-/* Surface area of a sphere. */
 double VectorSpace::SphereSurfArea(double distance) const
 {
 	Model::t M = new Model("space");
@@ -59,7 +48,6 @@ double VectorSpace::SphereSurfArea(double distance) const
 	return -1;
 }
 
-/* Weight function. */
 unsigned int Weight(const VectorSpace& space, unsigned int element)
 {
 	element %= space.alphabetSize;
@@ -80,11 +68,8 @@ unsigned int Weight(const VectorSpace& space, unsigned int element)
 	return weight;
 }
 
-/* Maximal weight in the vector space. */
 unsigned int MaxWeight(const VectorSpace& space)
 {
-	MetricCheck(space.metric);
-
 	std::vector<unsigned int> weights(space.alphabetSize);
 	for (auto i = 0; i < space.alphabetSize; ++i)
 	{
@@ -94,11 +79,8 @@ unsigned int MaxWeight(const VectorSpace& space)
 	return *std::max_element(weights.begin(), weights.end());
 }
 
-/* Average weight of a vector. */
 double AvgVectorWeight(const VectorSpace& space, double length)
 {
-	MetricCheck(space.metric);
-
 	double avgWeight = 0;
 	for (auto i = 0; i < space.alphabetSize; ++i)
 	{
