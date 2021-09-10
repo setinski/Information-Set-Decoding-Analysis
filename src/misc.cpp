@@ -1,4 +1,5 @@
 #include "misc.h"
+#include <cmath>
 
 bool MetricCheck(std::string m)
 {
@@ -29,7 +30,7 @@ double GoldenSectionSearch(double a, double b, double tol, const std::function<d
     const double gr = (sqrt(5) + 1) / 2;
     double c = b - (b - a) / gr;
     double d = a + (b - a) / gr;
-    while (abs(c - d) > tol)
+    while (std::abs(c - d) > tol)
     {
         if (f(c) < f(d))
         {

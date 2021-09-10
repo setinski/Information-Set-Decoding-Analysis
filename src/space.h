@@ -1,8 +1,8 @@
 #ifndef SPACE_H
 #define SPACE_H
 
-#include "monty.h"
 #include "fusion.h"
+#include "monty.h"
 #include "misc.h"
 
 using namespace mosek::fusion;

@@ -89,7 +89,7 @@ int main()
 	}
 	std::fstream outputFile(outputFilename + ".txt", std::ofstream::out |
 		std::ofstream::trunc);
-	outputFile << "alphabetSize codeRate weight optLevelNum paramL paramP";
+	outputFile << "alphabetSize codeRate weight optLevelNum paramL paramP ";
 	outputFile << "runtime(log 2) runtime(log alphabetSize)" << std::endl;
 	outputFile.close();
 
@@ -141,7 +141,7 @@ int main()
 		outputFile << std::fixed << std::setprecision(1) << std::setfill('0') << std::setw(3) << optLevelNum << "         ";
 		outputFile << std::fixed << std::setprecision(3) << paramL << "  ";
 		outputFile << std::fixed << std::setprecision(3) << paramP << "  ";
-		outputFile << std::fixed << std::setprecision(3) << -runTime << "                     ";
+		outputFile << std::fixed << std::setprecision(3) << -runTime << "          ";
 		outputFile << std::fixed << std::setprecision(3) << -runTime / log2(alphabetSizes[i]) << std::endl;
 		outputFile.close();
 

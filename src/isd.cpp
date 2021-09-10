@@ -322,7 +322,7 @@ double InformationSetDecoding::GoldenSectionSearch(double& paramL, double& param
     double c = b - (b - a) / gr;
     double d = a + (b - a) / gr;
 
-    while (abs(c - d) > tol)
+    while (std::abs(c - d) > tol)
     {
         double paramPLowC = std::max(0.0, weight - (1 - codeRate - c));
         double paramPHighC = std::min(weight, codeRate + c);
@@ -356,7 +356,7 @@ double InformationSetDecoding::GoldenSectionSearch(double& paramL, double& param
 
 struct TerminationCondition {
     bool operator() (double min, double max) {
-        return abs(min - max) <= tol;
+        return std::abs(min - max) <= tol;
     }
 };
 
