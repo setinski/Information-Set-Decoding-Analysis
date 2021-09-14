@@ -1,11 +1,14 @@
 CC=clang++
-IPATHS=-I<TOOLS_PATH>/platform/<PLATFORM>/h -I<BOOST_PATH>
-LPATHS=-L$<TOOLS_PATH>/platform/<PLATFORM>/bin -Wl,-rpath-link,<TOOLS_PATH>/platform/<PLATFORM>/bin '-Wl,-rpath=<TOOLS_PATH>/platform/<PLATFORM>/bin'
+IPATHS=-I<TOOLS_DIR>/platform/<PLATFORM>/h -I<BOOST_DIR>
+LPATHS=-L$<TOOLS_DIR>/platform/<PLATFORM>/bin -Wl,-rpath-link,<TOOLS_DIR>/platform/<PLATFORM>/bin '-Wl,-rpath=<TOOLS_DIR>/platform/<PLATFORM>/bin'
 OBJECTS = main.o isd.o space.o misc.o
 
 InformationSetDecoding: $(OBJECTS)
 	$(CC) -pthread -std=c++11 -g $(IPATHS) $(LPATHS) -o InformationSetDecoding $(OBJECTS) -lfusion64 -lmosek64
 	rm -f $(OBJECTS)
+	mkdir -p ../bin
+	mv InformationSetDecoding ../bin/InformationSetDecoding
+
 
 main.o: isd.h space.h misc.h
 	$(CC) -pthread -std=c++11 -g $(IPATHS) -c main.cpp
@@ -23,4 +26,5 @@ misc.o: misc.h
 .PHONY: clean
 
 clean:
-	rm -f InformationSetDecoding *.txt
+	rm -rf ../bin
+

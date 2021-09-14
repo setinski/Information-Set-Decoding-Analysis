@@ -1,13 +1,15 @@
 CC=clang++
-IPATHS=-I<TOOLS_PATH>/platform/<PLATFORM>/h -I<BOOST_PATH>
-LPATHS=-L<TOOLS_PATH>/platform/<PLATFORM>/bin
+IPATHS=-I<TOOLS_DIR>/platform/<PLATFORM>/h -I<BOOST_DIR>
+LPATHS=-L<TOOLS_DIR>/platform/<PLATFORM>/bin
 OBJECTS = main.o isd.o space.o misc.o
 
 InformationSetDecoding: $(OBJECTS)
 	$(CC) -Wl,-headerpad_max_install_names -std=c++11 -stdlib=libc++ -g $(IPATHS) $(LPATHS) -o InformationSetDecoding $(OBJECTS) -lfusion64 -lmosek64
-	install_name_tool -change libfusion64.9.2.dylib <TOOLS_PATH>/platform/<PLATFORM>/bin/libfusion64.9.2.dylib InformationSetDecoding || rm -f InformationSetDecoding
-	install_name_tool -change libmosek64.9.2.dylib <TOOLS_PATH>/platform/<PLATFORM>/bin/libmosek64.9.2.dylib InformationSetDecoding || rm -f InformationSetDecoding
+	install_name_tool -change libfusion64.9.2.dylib <TOOLS_DIR>/platform/<PLATFORM>/bin/libfusion64.9.2.dylib InformationSetDecoding || rm -f InformationSetDecoding
+	install_name_tool -change libmosek64.9.2.dylib <TOOLS_DIR>/platform/<PLATFORM>/bin/libmosek64.9.2.dylib InformationSetDecoding || rm -f InformationSetDecoding
 	rm -f $(OBJECTS)
+	mkdir -p ../bin
+	mv InformationSetDecoding ../bin/InformationSetDecoding
 
 main.o: isd.h space.h misc.h
 	$(CC) -std=c++11 -stdlib=libc++ -g $(IPATHS) -c main.cpp
@@ -24,5 +26,4 @@ misc.o: misc.h
 .PHONY: clean
 
 clean:
-	rm -f InformationSetDecoding *.txt
-
+	rm -rf ../bin
