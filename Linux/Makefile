@@ -10,17 +10,17 @@ InformationSetDecoding: $(OBJECTS)
 	mv InformationSetDecoding ../bin/InformationSetDecoding
 
 
-main.o: isd.h space.h misc.h
-	$(CC) -pthread -std=c++11 -g $(IPATHS) -c main.cpp
+../src/main.o: ../src/isd.h ../src/space.h ../src/misc.h
+	$(CC) -std=c++11 -stdlib=libc++ -g $(IPATHS) -c ../src/main.cpp
 
-isd.o: isd.h space.h misc.h
-	$(CC) -pthread -std=c++11 -g $(IPATHS) -c isd.cpp
+../src/isd.o: ../src/isd.h ../src/space.h ../src/misc.h
+	$(CC) -std=c++11 -stdlib=libc++ -g $(IPATHS) -c ../src/isd.cpp
 
-space.o: space.h misc.h
-	$(CC) -pthread -std=c++11 -g $(IPATHS) -c space.cpp
+../src/space.o: ../src/space.h ../src/misc.h
+	$(CC) -std=c++11 -stdlib=libc++ -g $(IPATHS) -c ../src/space.cpp
 
-misc.o: misc.h
-	$(CC) -pthread -std=c++11 -c misc.cpp
+../src/misc.o: ../src/misc.h
+	$(CC) -std=c++11 -stdlib=libc++ -c ../src/misc.cpp
 
 
 .PHONY: clean
