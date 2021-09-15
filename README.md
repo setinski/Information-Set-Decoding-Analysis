@@ -4,8 +4,7 @@ In this project, we analyze the complexity of the classical and quantum informat
 ## Project's dependencies
 
 Before building and/or running the project, one needs to:  
-1. [Download](https://www.boost.org/users/download/) **Boost** set of libraries and extract the archive:  
-The path to your extracted folder will be your BOOST_DIR path.
+1. [Download](https://www.boost.org/users/download/) **Boost** set of libraries and extract the archive: the path to your extracted folder will be your BOOST_DIR path.
 2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package.
 
 
@@ -30,7 +29,9 @@ To run the project, navigate to the binary subdirectory and run the InformationS
 ./InformationSetDecoding
 </pre>
 
-If everything works correctly, through the console, you will be asked to choose the arguments of the syndrome decoding problem and the algorithm that solves it. In particular, you will choose between the Hamming and Lee weight and between Prange's, Dumer's and Wagner's algorithm, as well as if the selected algorithm runs in the classical or quantum regime. You will also choose the alphabet size of the observed problem. In the resulting file (result.txt or result_quantum.txt), you will obtain the optimal values of the parameters of the selected algorithm when solving the hardest instance of the selected syndrome decoding problem. 
+If everything works correctly, through the console, you will be asked to choose the arguments of the syndrome decoding problem and the algorithm that solves it. In particular, you will choose between the Hamming and Lee weight and between Prange's, Dumer's and Wagner's algorithm, as well as if the selected algorithm runs in the classical or quantum regime. You will also choose the alphabet size of the observed problem.
+
+In the resulting file (result.txt or result_quantum.txt), you will obtain the optimal values of the parameters of the selected algorithm when solving the hardest instance of the selected syndrome decoding problem. 
 
 ### Authors
 André Chailloux, INRIA Paris, COSMIQ project-team  
