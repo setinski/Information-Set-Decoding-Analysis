@@ -5,7 +5,7 @@ In this project, we analyze the complexity of the classical and quantum informat
 
 Before building and/or running the project, one needs to:  
 1. [Download](https://www.boost.org/users/download/) **Boost** set of libraries and extract the archive: the path to the extracted folder will be your BOOST_DIR path.
-2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package: the path to the .../tools/... subdirectory of **MOSEk** install path will be your TOOLS_DIR path.
+2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package: the path to the ../tools/.. subdirectory of **MOSEK** install path will be your TOOLS_DIR path.
 
 
 ## Build and Run the project
