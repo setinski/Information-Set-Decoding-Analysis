@@ -21,19 +21,6 @@ We denote this directory as EXTRACTED_DIR.
 make
 </pre>
 
-/* - create **build** directory and navigate to it:
-<pre translate="no" dir="ltr" is-upgraded="">mkdir build
-cd build
-</pre> */
-
-/* - run CMake to configure the project and generate a native build system:
-<pre translate="no" dir="ltr" is-upgraded="">cmake ../src  
-</pre> */
-
-/* - call the build system to build the project:
-<pre translate="no" dir="ltr" is-upgraded="">cmake --build . --config Release
-</pre> */
-
 If everything is done correctly, you will find the InformationSetDecodingAnalaysis executable in ./bin subdirectory of your downloaded (extracted) directory.
 
 ## Run the project
