@@ -12,9 +12,9 @@ Before building and/or running the project, one needs to:
 
 The project is built through the following steps:
 
-1. Download the project (if downloaded as .zip archive, extract the folder from the downloaded archive).
-2. Navigate to the downloaded (extracted) direcotry: we denote this directory as EXTRACTED_DIR.
-3. Open Makefile in a text editor and edit the paths in Makefile so that they match the MOSEK and Boost paths in your system (namely, BOOST_DIR and TOOLS_DIR from Makefile).
+1. Download the project. If downloaded as .zip archive, extract the folder from the downloaded archive: we denote this directory as EXTRACTED_DIR.
+2. Navigate to the downloaded (extracted) direcotry, and choose the directory of your operating system (namely, either Mac or Linux), and navigate to it.
+3. In the chosen directory, find Makefile, open it in a text editor and edit the paths in Makefile so that they match the MOSEK and Boost paths in your system (namely, BOOST_DIR and TOOLS_DIR from Makefile).
 4. Navigate to the downloaded (extracted) directory through the console and build the project using **make** directive:
 <pre translate="no" dir="ltr" is-upgraded="">cd EXTRACTED_DIR
 make
