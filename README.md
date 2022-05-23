@@ -4,19 +4,24 @@ In this project, we analyze the complexity of the classical and quantum informat
 ## Project's dependencies
 
 Before building and/or running the project, one needs to:  
-1. [Download](https://www.boost.org/users/download/) **Boost** set of libraries and extract the archive: the path to the extracted folder will be your BOOST_DIR path.
-2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package: the path to the ../tools/.. subdirectory of **MOSEK** install path will be your TOOLS_DIR path.
+1. [Download](https://www.boost.org/users/download/) **Boost** set of libraries and extract the archive: the path to the extracted folder will be your <BOOST_DIR> path.
+2. [Download](https://www.mosek.com/downloads/) and [install](https://docs.mosek.com/9.2/cxxfusion/install-interface.html#testing-the-installation-and-compiling-examples) **MOSEK** software package: the path to the ../tools/.. subdirectory of **MOSEK** install path will be your <TOOLS_DIR> path.
 
 
 ## Build and Run the project
 
 The project is built through the following steps:
 
-1. Download the project. If downloaded as .zip archive, extract the directory from the downloaded archive: we denote this directory as EXTRACTED_DIR.
+1. Download the project. If downloaded as .zip archive, extract the directory from the downloaded archive: we denote this directory as <EXTRACTED_DIR>.
 2. Navigate to the the subdirectory of downloaded (extracted) directory that corresponds to your operating system (namely, either Mac or Linux).
-3. In the chosen subdirectory, find Makefile, open it in a text editor and edit the paths in Makefile so that they match the MOSEK and Boost paths on your machine (namely, BOOST_DIR and TOOLS_DIR from Makefile).
+3. In the chosen subdirectory, find Makefile, open it in a text editor and edit the paths in Makefile so that they match the MOSEK and Boost paths on your machine (namely, <BOOST_DIR> and <TOOLS_DIR> from Makefile), as well as the platform (namely <PLATFORM> from Makefile).
 4. Navigate to the downloaded (extracted) directory through the console and build the project using **make** directive:
-<pre translate="no" dir="ltr" is-upgraded="">cd EXTRACTED_DIR
+For Linux:
+<pre translate="no" dir="ltr" is-upgraded="">cd <EXTRACTED_DIR>/Linux
+make
+</pre>
+For Mac:
+<pre translate="no" dir="ltr" is-upgraded="">cd <EXTRACTED_DIR>/Mac
 make
 </pre>
 
