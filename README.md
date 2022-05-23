@@ -18,11 +18,11 @@ The project is built through the following steps:
 4. Navigate to the downloaded (extracted) directory through the console and build the project using **make** directive.
   
 For Linux:
-<pre translate="no" dir="ltr" is-upgraded="">cd <EXTRACTED_DIR>/Linux
+<pre translate="no" dir="ltr" is-upgraded="">cd \<EXTRACTED_DIR\>/Linux
 make
 </pre>
 For Mac:
-<pre translate="no" dir="ltr" is-upgraded="">cd <EXTRACTED_DIR>/Mac
+<pre translate="no" dir="ltr" is-upgraded="">cd \<EXTRACTED_DIR\>/Mac
 make
 </pre>
 
