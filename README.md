@@ -18,11 +18,11 @@ The project is built through the following steps:
 4. Navigate to the downloaded (extracted) directory through the console and build the project using **make** directive.
   
 For Linux:
-<pre translate="no" dir="ltr" is-upgraded="">cd \<EXTRACTED_DIR\>/Linux
+<pre translate="no" dir="ltr" is-upgraded="">cd &ltEXTRACTED_DIR&gt/Linux
 make
 </pre>
 For Mac:
-<pre translate="no" dir="ltr" is-upgraded="">cd \<EXTRACTED_DIR\>/Mac
+<pre translate="no" dir="ltr" is-upgraded="">cd &ltEXTRACTED_DIR&gt/Mac
 make
 </pre>
 
@@ -31,7 +31,7 @@ If everything is done correctly, you will find the InformationSetDecodingAnalays
 ## Run the project
 
 To run the project, navigate to the binary subdirectory and run the InformationSetDecoding executable:
-<pre translate="no" dir="ltr" is-upgraded="">cd EXTRACTED_DIR/bin
+<pre translate="no" dir="ltr" is-upgraded="">cd &ltEXTRACTED_DIR&gt/bin
 ./InformationSetDecoding
 </pre>
 
