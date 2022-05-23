@@ -403,7 +403,7 @@ double RunTime(std::string metric, std::string algorithm, unsigned int alphabetS
         throw std::invalid_argument("This metric is not offered. Allowed metrics are hamming and lee.");
 
     double runTime;
-    if (!metric.compare("hamming") && alphabetSize != 3)
+    if (!metric.compare("hamming") && (alphabetSize != 3 || alphabetSize !=2))
     {
         weight = LowerRoot(metric, alphabetSize, codeRate) - epsilon;
     }
